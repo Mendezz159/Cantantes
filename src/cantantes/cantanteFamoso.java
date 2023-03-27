@@ -11,10 +11,20 @@ package cantantes;
 class cantanteFamoso {
     private String Nombre;
     private String DiscoConMasVentas;
+    private long VentasDeDisco;
 
-    public cantanteFamoso(String Nombre, String DiscoConMasVentas) {
+    public cantanteFamoso(String Nombre, String DiscoConMasVentas, long VentasDeDisco) {
         this.Nombre = Nombre;
         this.DiscoConMasVentas = DiscoConMasVentas;
+        this.VentasDeDisco = VentasDeDisco;
+    }
+
+    public long getVentasDeDisco() {
+        return VentasDeDisco;
+    }
+
+    public void setVentasDeDisco(long VentasDeDisco) {
+        this.VentasDeDisco = VentasDeDisco;
     }
 
     

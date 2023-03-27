@@ -5,6 +5,7 @@
 package cantantes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -17,12 +18,13 @@ public class test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ListaCantantesFamosos Lista1 = new ListaCantantesFamosos();
+        HashMap <String, ListaCantantesFamosos> ConjuntoListas = new HashMap<>();
+        ConjuntoListas.put("Introducidas", new ListaCantantesFamosos());
         
-        Lista1.AñadirCantanteFamoso("Freddie Mercury", "Bohemian Rhapsody");
-        Lista1.AñadirCantanteFamoso("Jorge Velosa", "Las Diabluras");
+        ConjuntoListas = AñadirCantanteHash(ConjuntoListas,"Introducidas","Jorge Velosa", "Las Diabluras",1500000);
+        ConjuntoListas = AñadirCantanteHash(ConjuntoListas,"Introducidas","Freddie Mercury", "Bohemian Rhapsody",2000000000);
         
-        ActualizarListaPantalla(Lista1);
+        ActualizarListaPantalla(ConjuntoListas.get("Introducidas"));
         
         Scanner in=new Scanner (System.in);
         char op;
@@ -34,6 +36,8 @@ public class test {
                              1. Añadir Cantante
                              2. Modificar Nombre de cantante
                              3. Eliminar cantante
+                             4. Mostrar Lista de ingresos
+                             5. Mostrar Lista Ordenada por ventas
                              Para cerrar la ejecusion oprime 'Y'
                              
                              Ingresa uno de los caracteres presentados
@@ -48,35 +52,46 @@ public class test {
                         String Nombre = in.nextLine();
                         System.out.print("Ingresa Disco con mas ventas\n--");
                         String DiscoConMasVentas = in.nextLine();
+                        System.out.print("Ingresa ventas del Disco\n--");
+                        long VentasDeDisco = in.nextLong();
                         
-                        Lista1.AñadirCantanteFamoso(Nombre, DiscoConMasVentas);
-                        ActualizarListaPantalla(Lista1);
+                        ConjuntoListas = AñadirCantanteHash(ConjuntoListas,"Introducidas",Nombre, DiscoConMasVentas, VentasDeDisco);
+                        
                     }while(!repeat(op));
                     break;
                 case '2':
                     do{
                         System.out.print("Ingresa Nombre Actual del cantante\n--");
                         String ANombre = in.nextLine();
-                        if(!Lista1.ContieneCantante(ANombre)){
+                        if(!ConjuntoListas.get("Introducidas").ContieneCantante(ANombre)){
                             System.out.println("Este cantante no esta registrado");
                         }else{
                             System.out.print("Ingresa Nuevo Nombre del cantante\n--");
                             String NNombre = in.nextLine();
-                            Lista1.modificarCantante(ANombre, NNombre);
+                            ConjuntoListas = ModificarCantanteHash(ConjuntoListas,"Introducidas",ANombre, NNombre);
                         }
-                        ActualizarListaPantalla(Lista1);
                     }while(!repeat(op));
                     break;
                 case '3':
                     do{
                         System.out.print("Ingresa Nombre del cantante\n--");
                         String Nombre = in.nextLine();
-                        if(!Lista1.ContieneCantante(Nombre)){
+                        if(!ConjuntoListas.get("Introducidas").ContieneCantante(Nombre)){
                             System.out.println("Este cantante no esta registrado");
                         }else{
-                            Lista1.borrarCantante(Nombre);
+                            ConjuntoListas = BorrarCantanteHash(ConjuntoListas,"Introducidas",Nombre);
                         }
-                        ActualizarListaPantalla(Lista1);
+                    }while(!repeat(op));
+                    break;
+                case '4':
+                    do{
+                        ActualizarListaPantalla(ConjuntoListas.get("Introducidas"));
+                    }while(!repeat(op));
+                    break;
+                case '5':
+                    do{
+                        ConjuntoListas = ListaOrdenada(ConjuntoListas);
+                        ActualizarListaPantalla(ConjuntoListas.get("Ordenada"));
                     }while(!repeat(op));
                     break;
                 case 'y': case 'Y':
@@ -97,9 +112,22 @@ public class test {
         for(int i = 0 ; i < Alist.size() ; i++){
             String Nombre = Alist.get(i).getNombre();
             String DiscoConMasVentas = Alist.get(i).getDiscoConMasVentas();
+            long VentasDeDisco = Alist.get(i).getVentasDeDisco();
             
-            System.out.println("Cantante: "+Nombre+" ; Disco Mas Vendido: "+DiscoConMasVentas);
+            System.out.println(DiscoConMasVentas+" - "+Nombre+"\n\tVentas: "+VentasDeDisco);
         }
+    }
+    
+    private static HashMap <String, ListaCantantesFamosos> ListaOrdenada(HashMap <String, ListaCantantesFamosos> hash){
+        HashMap <String, ListaCantantesFamosos> Hash = hash;
+        
+        if(!Hash.containsKey("Ordenada")){
+            Hash.put("Ordenada", Hash.get("Introducidas").OrdenarLista());
+        }else{
+            Hash.replace("Ordenada", Hash.get("Introducidas").OrdenarLista());
+        }
+        
+        return(Hash);
     }
     
     private static boolean repeat(char Operator){
@@ -114,5 +142,34 @@ public class test {
         }while(Operator!='n'&&Operator!='N'&&Operator!='m'&&Operator!='M');
         
         return Operator!='n'&&Operator!='N';
+    }
+    
+    
+    
+    private static HashMap <String, ListaCantantesFamosos> AñadirCantanteHash(HashMap <String, ListaCantantesFamosos> hash, String key, String Nombre, String DiscoMasVendido, long VentasDisco){
+        HashMap <String, ListaCantantesFamosos> Hash = hash;
+        ListaCantantesFamosos Lista = Hash.get(key);
+        Lista.AñadirCantanteFamoso(Nombre, DiscoMasVendido, VentasDisco);
+        Hash.replace(key, Lista);
+        
+        return Hash;
+    }
+    
+    private static HashMap <String, ListaCantantesFamosos> ModificarCantanteHash(HashMap <String, ListaCantantesFamosos> hash, String key, String ANombre, String NNombre){
+        HashMap <String, ListaCantantesFamosos> Hash = hash;
+        ListaCantantesFamosos Lista = Hash.get(key);
+        Lista.modificarCantante(ANombre, NNombre);
+        Hash.replace(key, Lista);
+        
+        return Hash;
+    }
+    
+    private static HashMap <String, ListaCantantesFamosos> BorrarCantanteHash(HashMap <String, ListaCantantesFamosos> hash, String key, String Nombre){
+        HashMap <String, ListaCantantesFamosos> Hash = hash;
+        ListaCantantesFamosos Lista = Hash.get(key);
+        Lista.borrarCantante(Nombre);
+        Hash.replace(key, Lista);
+        
+        return Hash;
     }
 }
