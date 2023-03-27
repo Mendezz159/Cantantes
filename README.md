@@ -1,2 +1,2 @@
 # Cantantes
-en esta
+en la ruta src/cantantes estan las clases respectivas
