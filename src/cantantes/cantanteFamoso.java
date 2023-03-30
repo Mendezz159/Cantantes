@@ -4,20 +4,25 @@
  */
 package cantantes;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author HP PORTATIL
  */
 class cantanteFamoso {
     private String Nombre;
-    private String DiscoConMasVentas;
+    private ArrayList<Integer> IDsCanciones;
 
-    public cantanteFamoso(String Nombre, String DiscoConMasVentas) {
+    public cantanteFamoso(String Nombre, ArrayList<Integer> IDsCanciones) {
         this.Nombre = Nombre;
-        this.DiscoConMasVentas = DiscoConMasVentas;
+        this.IDsCanciones = IDsCanciones;
     }
 
-    
+    public cantanteFamoso(String Nombre){
+        this.Nombre = Nombre;
+        this.IDsCanciones = new ArrayList<>();
+    }
     
     public String getNombre() {
         return Nombre;
@@ -27,13 +32,15 @@ class cantanteFamoso {
         this.Nombre = Nombre;
     }
 
-    public String getDiscoConMasVentas() {
-        return DiscoConMasVentas;
+    public ArrayList<Integer> getDiscoConMasVentas() {
+        return IDsCanciones;
     }
 
-    public void setDiscoConMasVentas(String DiscoConMasVentas) {
-        this.DiscoConMasVentas = DiscoConMasVentas;
+    public void setDiscoConMasVentas(ArrayList<Integer> IDsCanciones) {
+        this.IDsCanciones = IDsCanciones;
     }
     
-    
+    public void AñadirCancion(int IDCancion){
+        this.IDsCanciones.add(IDCancion);
+    }
 }

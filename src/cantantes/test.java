@@ -28,16 +28,16 @@ public class test {
         char op;
         
         do{
-            System.out.print("""
-                             ----------------------------------------------------MENU PRINCIPAL----------------------------------------------------
-                             
-                             1. Añadir Cantante
-                             2. Modificar Nombre de cantante
-                             3. Eliminar cantante
-                             Para cerrar la ejecusion oprime 'Y'
-                             
-                             Ingresa uno de los caracteres presentados
-                             --""");
+            System.out.print("----------------------------------------------------MENU PRINCIPAL----------------------------------------------------"+
+                             "\n"+
+                             "\n1. Añadir Cantante"+
+                             "\n2. Modificar Nombre de cantante"+
+                             "\n3. Eliminar cantante"+
+                             "\nPara cerrar la ejecusion oprime 'Y'"+
+                             "\n"+
+                             "\nIngresa uno de los caracteres presentados"+
+                             "\n--");
+                            
             op=in.next().charAt(0);
             System.out.println("----------------------------------------------------------------------------------------------------------------------");
             in.nextLine();
