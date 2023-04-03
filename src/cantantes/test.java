@@ -25,6 +25,7 @@ public class test {
         base.CrearCantante("Jorge Velosa");
         
         base.CrearCancion("Las Diabluras", base.BuscarCantante("Jorge Velosa"), 1500000);
+        base.CrearCancion("Bohemian Rhapsody", base.BuscarCantante("Freddie Mercury"), 2000000000);
         
         Scanner in=new Scanner (System.in);
         char op;
