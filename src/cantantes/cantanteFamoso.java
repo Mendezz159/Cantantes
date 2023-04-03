@@ -32,15 +32,20 @@ class cantanteFamoso {
         this.Nombre = Nombre;
     }
 
-    public ArrayList<Integer> getDiscoConMasVentas() {
+    public ArrayList<Integer> getIDsCanciones() {
         return IDsCanciones;
     }
 
-    public void setDiscoConMasVentas(ArrayList<Integer> IDsCanciones) {
+    public void setIDsCanciones(ArrayList<Integer> IDsCanciones) {
         this.IDsCanciones = IDsCanciones;
     }
     
     public void AñadirCancion(int IDCancion){
         this.IDsCanciones.add(IDCancion);
+    }
+    
+    public void BorrarCancion(int IDCancion){
+        int index = this.IDsCanciones.indexOf(IDCancion);
+        this.IDsCanciones.remove(index);
     }
 }

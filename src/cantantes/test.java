@@ -13,16 +13,18 @@ import java.util.Scanner;
  */
 public class test {
 
+    private static Base base = new Base();
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ListaCantantesFamosos Lista1 = new ListaCantantesFamosos();
         
-        Lista1.AñadirCantanteFamoso("Freddie Mercury", "Bohemian Rhapsody");
-        Lista1.AñadirCantanteFamoso("Jorge Velosa", "Las Diabluras");
         
-        ActualizarListaPantalla(Lista1);
+        base.CrearCantante("Freddie Mercury");
+        base.CrearCantante("Jorge Velosa");
+        
+        base.CrearCancion("Las Diabluras", base.BuscarCantante("Jorge Velosa"), 100);
         
         Scanner in=new Scanner (System.in);
         char op;
@@ -31,8 +33,14 @@ public class test {
             System.out.print("----------------------------------------------------MENU PRINCIPAL----------------------------------------------------"+
                              "\n"+
                              "\n1. Añadir Cantante"+
-                             "\n2. Modificar Nombre de cantante"+
-                             "\n3. Eliminar cantante"+
+                             "\n2. Añadir Cancion"+
+                             "\n3. Modificar cantante"+
+                             "\n4. Modificar Cancion"+
+                             "\n5. Eliminar cantante"+
+                             "\n6. Eliminar cancion"+
+                             "\n7. Mostrar ventas de un cantante"+
+                             "\n8. Mostrar disco mas vendido de un cantante"+
+                             "\n9. Mostrar todos los cantantes y discos"+
                              "\nPara cerrar la ejecusion oprime 'Y'"+
                              "\n"+
                              "\nIngresa uno de los caracteres presentados"+
@@ -46,37 +54,124 @@ public class test {
                     do{
                         System.out.print("Ingresa Nombre del cantante\n--");
                         String Nombre = in.nextLine();
-                        System.out.print("Ingresa Disco con mas ventas\n--");
-                        String DiscoConMasVentas = in.nextLine();
                         
-                        Lista1.AñadirCantanteFamoso(Nombre, DiscoConMasVentas);
-                        ActualizarListaPantalla(Lista1);
+                        base.CrearCantante(Nombre);
                     }while(!repeat(op));
                     break;
                 case '2':
                     do{
-                        System.out.print("Ingresa Nombre Actual del cantante\n--");
-                        String ANombre = in.nextLine();
-                        if(!Lista1.ContieneCantante(ANombre)){
-                            System.out.println("Este cantante no esta registrado");
-                        }else{
-                            System.out.print("Ingresa Nuevo Nombre del cantante\n--");
-                            String NNombre = in.nextLine();
-                            Lista1.modificarCantante(ANombre, NNombre);
-                        }
-                        ActualizarListaPantalla(Lista1);
+
+                        System.out.print("Ingresa Nombre de la cancion\n--");
+                        String Nombre = in.nextLine();
+                        
+                        ArrayList IDsCantantes = CrearArrayCantantes();
+                        
+                        System.out.print("Ingresa el numero de Ventas\n--");
+                        int Ventas = in.nextInt();
+                        
+                        base.CrearCancion(Nombre, IDsCantantes, Ventas);
                     }while(!repeat(op));
                     break;
                 case '3':
                     do{
+                        System.out.print("Ingresa Nombre Actual del cantante\n--");
+                        String ANombre = in.nextLine();
+                        
+                        int CodigoCantante = base.BuscarCantante(ANombre);
+                        boolean CantanteRegistrado = CodigoCantante != -1;
+                        if(!CantanteRegistrado){
+                            System.out.println("No se encontro el nombre del cantante, puebe cambiar las mayuscular");
+                        }else{
+                            System.out.print("Ingresa Nuevo Nombre del cantante\n--");
+                            String NNombre = in.nextLine();
+                            base.ModificarCantante(CodigoCantante, NNombre);
+                        }
+                    }while(!repeat(op));
+                    break;
+                case '4':
+                    do{
+                        System.out.print("Ingresa Nombre Actual de la cancion\n--");
+                        String ANombre = in.nextLine();
+                        
+                        int CodigoCancion = base.BuscarCancion(ANombre);
+                        boolean CancionRegistrada = CodigoCancion != -1;
+                        if(!CancionRegistrada){
+                            System.out.println("No se encontro el nombre de la cancion, puebe cambiar las mayuscular");
+                        }else{
+                            System.out.print("Ingresa Nuevo Nombre de la cancion\n--");
+                            String NNombre = in.nextLine();
+                            System.out.print("Ingresa Nuevo Numero de ventas\n--");
+                            int Ventas = in.nextInt();
+                            
+                            base.ModificarCancion(CodigoCancion, NNombre, Ventas);
+                        }
+                    }while(!repeat(op));
+                    break;
+                case '5':
+                    do{
                         System.out.print("Ingresa Nombre del cantante\n--");
                         String Nombre = in.nextLine();
-                        if(!Lista1.ContieneCantante(Nombre)){
-                            System.out.println("Este cantante no esta registrado");
+                        
+                        int CodigoCantante = base.BuscarCantante(Nombre);
+                        boolean CantanteRegistrado = CodigoCantante != -1;
+                        if(!CantanteRegistrado){
+                            System.out.println("No se encontro el nombre del cantante, puebe cambiar las mayuscular");
                         }else{
-                            Lista1.borrarCantante(Nombre);
+                            base.BorrarCantante(CodigoCantante);
                         }
-                        ActualizarListaPantalla(Lista1);
+                    }while(!repeat(op));
+                    break;
+                case '6':
+                    do{
+                        System.out.print("Ingresa Nombre de la cancion\n--");
+                        String Nombre = in.nextLine();
+                        
+                        int CodigoCancion = base.BuscarCancion(Nombre);
+                        boolean CancionRegistrada = CodigoCancion != -1;
+                        if(!CancionRegistrada){
+                            System.out.println("No se encontro el nombre de la cancion, puebe cambiar las mayuscular");
+                        }else{
+                            base.BorrarCancion(CodigoCancion);
+                        }
+                    }while(!repeat(op));
+                    break;
+                case '7':
+                    do{
+                        System.out.print("Ingresa Nombre del cantante\n--");
+                        String NombreCantante = in.nextLine();
+                        
+                        int CodigoCantante = base.BuscarCantante(NombreCantante);
+                        boolean CantanteRegistrado = CodigoCantante != -1;
+                        if(!CantanteRegistrado){
+                            System.out.println("No se encontro el nombre del cantante, puebe cambiar las mayuscular");
+                        }else{
+                            int Ventas = base.VentasTotalesCantante(CodigoCantante);
+                            System.out.println("\nLas ventas de "+NombreCantante+" dan un total de $"+Ventas+"\n");
+                        }
+                    }while(!repeat(op));
+                    break;
+                case '8':
+                    do{
+                        System.out.print("Ingresa Nombre del cantante\n--");
+                        String NombreCantante = in.nextLine();
+                        
+                        int CodigoCantante = base.BuscarCantante(NombreCantante);
+                        boolean CantanteRegistrado = CodigoCantante != -1;
+                        if(!CantanteRegistrado){
+                            System.out.println("No se encontro el nombre del cantante, puebe cambiar las mayuscular");
+                        }else{
+                            Cancion DiscoMasVendido = base.DiscoMasVendidoDeCantante(CodigoCantante);
+                            String NombreDisco = DiscoMasVendido.getNombre();
+                            int VentasDisco = DiscoMasVendido.getVentas();
+                            
+                            System.out.println("\nEl disco mas vendido de "+NombreCantante+" es "+NombreDisco+" con $"+VentasDisco+"\n");
+                        }
+                    }while(!repeat(op));
+                    break;
+                case '9':
+                    do{
+                        String Tabla = base.toSringTabla();
+                        System.out.println(Tabla);
                     }while(!repeat(op));
                     break;
                 case 'y': case 'Y':
@@ -90,16 +185,30 @@ public class test {
         
     }
     
-    
-    public static void ActualizarListaPantalla(ListaCantantesFamosos Lista){
-        ArrayList<cantanteFamoso> Alist = Lista.getListacantantesFamosos();
+    private static ArrayList<Integer> CrearArrayCantantes(){
+        Scanner in=new Scanner (System.in);
+        ArrayList<Integer> IDsCantantes = new ArrayList<>();
         
-        for(int i = 0 ; i < Alist.size() ; i++){
-            String Nombre = Alist.get(i).getNombre();
-            String DiscoConMasVentas = Alist.get(i).getDiscoConMasVentas();
-            
-            System.out.println("Cantante: "+Nombre+" ; Disco Mas Vendido: "+DiscoConMasVentas);
+        System.out.print("Ingresa Cuantos cantantes participaron en este disco\n--");
+        int CantidadCantantes = in.nextInt();
+        
+        in.nextLine();
+        for(int i=0;i<CantidadCantantes;i++){
+            var repetir = false;
+            do{
+                System.out.print("Ingresa Nombre del cantante\n--");
+                String Nombre = in.nextLine();
+
+                int CodigoCantante = base.BuscarCantante(Nombre);
+                if(CodigoCantante == -1){
+                    System.out.println("No se encontro el nombre del cantante, puebe cambiar las mayuscular");
+                    repetir=true;
+                }else{
+                    IDsCantantes.add(CodigoCantante);
+                }
+            }while(repetir);
         }
+        return IDsCantantes;
     }
     
     private static boolean repeat(char Operator){

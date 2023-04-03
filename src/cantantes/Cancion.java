@@ -15,13 +15,21 @@ public class Cancion {
     private ArrayList<Integer> IDsCantantes;
     private int Ventas;
 
-    public cantanteFamoso(String Nombre, ArrayList<Integer> IDsCantantes, int Ventas) {
+    public Cancion(String Nombre, ArrayList<Integer> IDsCantantes, int Ventas) {
         this.Nombre = Nombre;
         this.IDsCantantes = IDsCantantes;
         this.Ventas =  Ventas;
     }
+    
+    public Cancion(String Nombre, int IDCantante, int Ventas) {
+        this.Nombre = Nombre;
+        ArrayList<Integer> IDsCantantes = new ArrayList<>();
+        IDsCantantes.add(IDCantante);
+        this.IDsCantantes = IDsCantantes;
+        this.Ventas =  Ventas;
+    }
 
-    public cantanteFamoso(String Nombre, int Ventas){
+    public Cancion(String Nombre, int Ventas){
         this.Nombre = Nombre;
         this.IDsCantantes = new ArrayList<>();
         this.Ventas =  Ventas;
@@ -51,5 +59,12 @@ public class Cancion {
         this.Ventas = Ventas;
     }
     
+    public void AñadirCantante(int codigo){
+        this.IDsCantantes.add(codigo);
+    }
     
+    public void BorrarCantante(int codigo){
+        int index = this.IDsCantantes.indexOf(codigo);
+        this.IDsCantantes.remove(index);
+    }
 }
