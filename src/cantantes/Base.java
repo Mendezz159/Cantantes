@@ -34,7 +34,7 @@ public class Base {
         }throw new IllegalArgumentException("La lista esta llena");
     }
     
-    public void CrearCancion(String Nombre, ArrayList<Integer> CantantesID, int Ventas){
+    public void CrearCancion(String Nombre, ArrayList<Integer> CantantesID, long Ventas){
         
         for(int codigo = 100000; codigo < 1000000 ; codigo++){
             
@@ -55,7 +55,7 @@ public class Base {
             }
         }throw new IllegalArgumentException("La lista esta llena");
     }
-    public void CrearCancion(String Nombre, int CantanteID, int Ventas){
+    public void CrearCancion(String Nombre, int CantanteID, long Ventas){
         ArrayList<Integer> CantantesID = new ArrayList<>();
         CantantesID.add(CantanteID);
         for(int codigo = 100000; codigo < 1000000 ; codigo++){
@@ -94,7 +94,7 @@ public class Base {
         }
     }
     
-    public void ModificarCancion(int Codigo, String Nombre, int Ventas){
+    public void ModificarCancion(int Codigo, String Nombre, long Ventas){
         Cancion cancion = ListaCanciones.get(Codigo);
         cancion.setNombre(Nombre);
         cancion.setVentas(Ventas);
@@ -143,7 +143,7 @@ public class Base {
             for(int cancionID:CancionesCantanteIDs){
                 Cancion cancion = ListaCanciones.get(cancionID);
                 String NombreCancion = cancion.getNombre();
-                int VentasCancion = cancion.getVentas();
+                long VentasCancion = cancion.getVentas();
                 
                 str += "\t- "+NombreCancion+": $"+VentasCancion+"\n";
             }
@@ -170,4 +170,5 @@ public class Base {
         }
         return -1;
     }
+
 }

@@ -13,15 +13,15 @@ import java.util.ArrayList;
 public class Cancion {
     private String Nombre;
     private ArrayList<Integer> IDsCantantes;
-    private int Ventas;
+    private long Ventas;
 
-    public Cancion(String Nombre, ArrayList<Integer> IDsCantantes, int Ventas) {
+    public Cancion(String Nombre, ArrayList<Integer> IDsCantantes, long Ventas) {
         this.Nombre = Nombre;
         this.IDsCantantes = IDsCantantes;
         this.Ventas =  Ventas;
     }
     
-    public Cancion(String Nombre, int IDCantante, int Ventas) {
+    public Cancion(String Nombre, int IDCantante, long Ventas) {
         this.Nombre = Nombre;
         ArrayList<Integer> IDsCantantes = new ArrayList<>();
         IDsCantantes.add(IDCantante);
@@ -29,7 +29,7 @@ public class Cancion {
         this.Ventas =  Ventas;
     }
 
-    public Cancion(String Nombre, int Ventas){
+    public Cancion(String Nombre, long Ventas){
         this.Nombre = Nombre;
         this.IDsCantantes = new ArrayList<>();
         this.Ventas =  Ventas;
@@ -51,11 +51,11 @@ public class Cancion {
         this.IDsCantantes = IDsCantantes;
     }
 
-    public int getVentas() {
+    public long getVentas() {
         return Ventas;
     }
 
-    public void setVentas(int Ventas) {
+    public void setVentas(long Ventas) {
         this.Ventas = Ventas;
     }
     

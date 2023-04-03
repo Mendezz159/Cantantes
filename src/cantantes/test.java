@@ -24,7 +24,7 @@ public class test {
         base.CrearCantante("Freddie Mercury");
         base.CrearCantante("Jorge Velosa");
         
-        base.CrearCancion("Las Diabluras", base.BuscarCantante("Jorge Velosa"), 100);
+        base.CrearCancion("Las Diabluras", base.BuscarCantante("Jorge Velosa"), 1500000);
         
         Scanner in=new Scanner (System.in);
         char op;
@@ -67,7 +67,7 @@ public class test {
                         ArrayList IDsCantantes = CrearArrayCantantes();
                         
                         System.out.print("Ingresa el numero de Ventas\n--");
-                        int Ventas = in.nextInt();
+                        long Ventas = in.nextLong();
                         
                         base.CrearCancion(Nombre, IDsCantantes, Ventas);
                     }while(!repeat(op));
@@ -101,7 +101,7 @@ public class test {
                             System.out.print("Ingresa Nuevo Nombre de la cancion\n--");
                             String NNombre = in.nextLine();
                             System.out.print("Ingresa Nuevo Numero de ventas\n--");
-                            int Ventas = in.nextInt();
+                            long Ventas = in.nextLong();
                             
                             base.ModificarCancion(CodigoCancion, NNombre, Ventas);
                         }
@@ -162,7 +162,7 @@ public class test {
                         }else{
                             Cancion DiscoMasVendido = base.DiscoMasVendidoDeCantante(CodigoCantante);
                             String NombreDisco = DiscoMasVendido.getNombre();
-                            int VentasDisco = DiscoMasVendido.getVentas();
+                            long VentasDisco = DiscoMasVendido.getVentas();
                             
                             System.out.println("\nEl disco mas vendido de "+NombreCantante+" es "+NombreDisco+" con $"+VentasDisco+"\n");
                         }
